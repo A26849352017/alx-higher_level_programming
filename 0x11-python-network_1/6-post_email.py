@@ -1,14 +1,16 @@
 #!/usr/bin/python3
-"""initialize"""
+"""A  script that:
+- takes in a URL and an email address
+- sends a POST request to the passed URL with the email as a parameter
+- displays the body of the response.
+"""
+import sys
 import requests
-from sys import argv
 
 
-def post_email():
-    """post an email"""
-    req = requests.post(argv[1], data={'email': argv[2]})
-    print(req.text)
+if __name__ == "__main__":
+    url = sys.argv[1]
+    value = {"email": sys.argv[2]}
 
-
-if __name__ == '__main__':
-    post_email()
+    r = requests.post(url, data=value)
+    print(r.text)

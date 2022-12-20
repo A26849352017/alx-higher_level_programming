@@ -1,19 +1,18 @@
 #!/usr/bin/python3
-"""initialize"""
+"""A script that
+- takes in a URL
+- sends a request to the URL
+- displays the body of the response.
+"""
+import sys
 import requests
-from sys import argv
 
 
-def request_status():
-    """request status code"""
-    req = requests.get(argv[1])
-    code = req.status_code
+if __name__ == "__main__":
+    url = sys.argv[1]
 
-    if(code == 200):
-        print(req.text)
+    r = requests.get(url)
+    if r.status_code >= 400:
+        print("Error code: {}".format(r.status_code))
     else:
-        print('Error code: {}'.format(req.status_code))
-
-
-if __name__ == '__main__':
-    request_status()
+        print(r.text)

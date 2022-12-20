@@ -1,14 +1,12 @@
 #!/usr/bin/python3
-"""initialize"""
+"""Displays the X-Request-Id header variable of a request to a given URL
+"""
+import sys
 import requests
-from sys import argv
 
 
-def extract_header():
-    """extract header key X-Request_id"""
-    req = requests.get(argv[1])
-    print(req.headers.get('X-Request-Id'))
+if __name__ == "__main__":
+    url = sys.argv[1]
 
-
-if __name__ == '__main__':
-    extract_header()
+    r = requests.get(url)
+    print(r.headers.get("X-Request-Id"))

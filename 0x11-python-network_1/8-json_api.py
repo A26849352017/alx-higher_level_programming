@@ -1,30 +1,23 @@
 #!/usr/bin/python3
-"""initialize"""
+"""A script tha:
+- takes in a letter
+- sends POST request to http://0.0.0.0:5000/search_user
+with the letter as a parameter.
+"""
+import sys
 import requests
-from sys import argv
 
 
-def post_q():
-    """post a variable"""
+if __name__ == "__main__":
+    letter = "" if len(sys.argv) == 1 else sys.argv[1]
+    payload = {"q": letter}
+
+    r = requests.post("http://0.0.0.0:5000/search_user", data=payload)
     try:
-        q = argv[1]
-    except IndexError:
-        q = ''
-
-    url = 'http://0.0.0.0:5000/search_user'
-    data = {'q': q}
-    req = requests.post(url, data)
-    try:
-        j_format = req.json()
-        if (len(j_format) == 0):
-            print('No result')
+        response = r.json()
+        if response == {}:
+            print("No result")
         else:
-            id_no = j_format.get('id')
-            name = j_format.get('name')
-            print('[{}] {}'.format(id_no, name))
+            print("[{}] {}".format(response.get("id"), response.get("name")))
     except ValueError:
-        print('Not a valid JSON')
-
-
-if __name__ == '__main__':
-    post_q()
+        print("Not a valid JSON")
